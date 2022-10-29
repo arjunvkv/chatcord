@@ -28,43 +28,38 @@ const Home = () => {
     if (await validation()) {
       console.log(username, room);
     }
+    window.location.href = "/chat";
   };
   useEffect(() => {
     console.log("🚀 ~ file: Home.js ~ line 43 ~ Home ~ errMsg", errMsg);
   }, [errMsg]);
 
   return (
-    <div className="h-screen w-full flex text-white justify-center bg-gray-700 md:chatcolor">
-      <div className="lg:w-7/12 w-full h-fit m-4 rounded-lg bg-gray-800 md:bg-chatbox">
-        <div className="h-14 bg-gray-700 border-gray-800 border-2 md:border-0 md:bg-red-300 grid place-content-center rounded-tl-lg rounded-tr-lg">
+    <div className="flex h-screen w-full justify-center bg-gray-700 text-white">
+      <div className="m-4 h-fit w-full rounded-lg bg-gray-800 lg:w-7/12 ">
+        <div className="grid h-14 place-content-center rounded-tl-lg rounded-tr-lg border-2 border-gray-800 bg-gray-700">
           ChatCord
         </div>
-        <div className="flex justify-center flex-col space-y-1 md:px-32 md:py-20 py-4 px-4 w-full">
-          <div className="pb-5 w-full">
-            <h1 className="block mb-2 text-sm font-medium md:text-label">
-              Username
-            </h1>
+        <div className="flex w-full flex-col justify-center space-y-1 py-4 px-4 md:px-32 md:py-20">
+          <div className="w-full pb-5">
+            <h1 className="mb-2 block text-sm font-medium ">Username</h1>
             <input
               id="username"
-              className="w-full focus:outline-none inputborder rounded-xl py-2 px-3 placeholder:text-gray-500 placeholder:text-sm text-gray-500 text-sm"
+              className="w-full rounded-xl py-2 px-3 text-sm text-gray-500 placeholder:text-sm placeholder:text-gray-500 focus:outline-none"
               placeholder="John Doe"
               type="text"
               onChange={(e) => {
                 setUsername(e.target.value);
               }}
             />
-            <p className="text-red-300 md:text-red-500 text-sm">
-              {errMsg?.username}
-            </p>
+            <p className="text-sm  text-red-300">{errMsg?.username}</p>
           </div>
           <div className="">
-            <label className="block mb-2 text-sm font-medium md:text-label">
-              Room
-            </label>
+            <label className="mb-2 block text-sm font-medium ">Room</label>
             <select
               id="room"
               name="room"
-              className="w-full px-3 py-2 rounded-xl border text-gray-500 text-sm focus:outline-none block inputborder"
+              className="block w-full rounded-xl border px-3 py-2 text-sm text-gray-500 focus:outline-none "
               onChange={(e) => {
                 setRoom(e.target.value);
               }}
@@ -77,16 +72,14 @@ const Home = () => {
               <option value="Ruby">Ruby</option>
               <option value="Java">Java</option>
             </select>
-            <p className="text-red-300 md:text-red-500 text-sm">
-              {errMsg?.room}
-            </p>
+            <p className="text-sm  text-red-300">{errMsg?.room}</p>
           </div>
 
-          <div className="w-full text-center py-6">
+          <div className="w-full py-6 text-center">
             <button
               id="formbutton"
               type="submit"
-              className="bg-gray-700 md:button p-2 px-6 rounded-xl whitespace-nowrap drop-shadow-sm"
+              className=" whitespace-nowrap rounded-xl bg-gray-700 p-2 px-6 drop-shadow-sm"
               onClick={handleSubmit}
             >
               Join Chat
