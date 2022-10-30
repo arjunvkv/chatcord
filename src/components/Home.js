@@ -27,6 +27,8 @@ const Home = () => {
   const handleSubmit = async () => {
     if (await validation()) {
       console.log(username, room);
+      localStorage.setItem("username", username);
+      localStorage.setItem("room", room);
     }
     window.location.href = "/chat";
   };
