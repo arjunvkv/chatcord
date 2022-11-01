@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import io from "socket.io-client";
 const Home = () => {
   const [username, setUsername] = useState("");
   const [room, setRoom] = useState("");
@@ -29,18 +29,18 @@ const Home = () => {
       console.log(username, room);
       localStorage.setItem("username", username);
       localStorage.setItem("room", room);
+      window.location.href = "/chat";
     }
-    window.location.href = "/chat";
   };
   useEffect(() => {
     console.log("🚀 ~ file: Home.js ~ line 43 ~ Home ~ errMsg", errMsg);
   }, [errMsg]);
 
   return (
-    <div className="flex h-screen w-full justify-center bg-gray-700 text-white">
+    <div className="flex h-screen w-full justify-center bg-gray-600 text-white">
       <div className="m-4 h-fit w-full rounded-lg bg-gray-800 lg:w-7/12 ">
         <div className="grid h-14 place-content-center rounded-tl-lg rounded-tr-lg border-2 border-gray-800 bg-gray-700">
-          ChatCord
+          Discord Demo
         </div>
         <div className="flex w-full flex-col justify-center space-y-1 py-4 px-4 md:px-32 md:py-20">
           <div className="w-full pb-5">

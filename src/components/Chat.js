@@ -5,53 +5,43 @@ import { MdOutlineMeetingRoom } from "react-icons/md";
 import { MdOutlineSendToMobile } from "react-icons/md";
 import { MdOutlineRoomPreferences } from "react-icons/md";
 import { FaUsersCog } from "react-icons/fa";
+import io from "socket.io-client";
 const rooms = ["javascript", "react", "sass", "node", "django", "python"];
 const users = ["steeven", "arjun", "deepak", "vyshak", "vinayak", "julian"];
+const socket = io.connect("http://localhost:3300");
+socket.emit("joinRoom", {
+  username: localStorage.getItem("username"),
+  room: localStorage.getItem("room"),
+});
 
 const Chat = () => {
   const [showRoom, setShowRoom] = useState(false);
   const [showUsers, setShowUsers] = useState(false);
   const [messages, setMessages] = useState([
-    { message: "hai you have been disQualified", time: "1:5pm", name: "arjun" },
-    // { message: "hai you have been disQualified", time: "1:5pm", name: "jojo" },
-    // { message: "hai you have been disQualified", time: "1:5pm", name: "do" },
-    // { message: "hai you have been disQualified", time: "1:5pm", name: "not" },
-    // { message: "hai you have been disQualified", time: "1:5pm", name: "try" },
-    // { message: "hai you have been disQualified", time: "1:5pm", name: "this" },
-    // { message: "hai you have been disQualified", time: "1:5pm", name: "at" },
-    // { message: "hai you have been disQualified", time: "1:5pm", name: "home" },
-    // {
-    //   message: "hai you have been disQualified",
-    //   time: "1:5pm",
-    //   name: "adventures",
-    // },
-    // {
-    //   message: "hai you have been disQualified",
-    //   time: "1:5pm",
-    //   name: "bizare",
-    // },
-    // {
-    //   message: "hai you have been disQualified",
-    //   time: "1:5pm",
-    //   name: "chrison",
-    // },
-    // {
-    //   message: "hai you have been disQualified",
-    //   time: "1:5pm",
-    //   name: "steeven",
-    // },
+    {
+      message: "You have been kicked out for misbehaving!",
+      time: "1:5pm",
+      name: "arjun",
+    },
   ]);
 
-  const sendMsg = () => {
-    setMessages((prev) => [
-      ...prev,
-      {
-        message: "hai you have been disQualified",
-        time: "1:5pm",
-        name: "jojo",
-      },
-    ]);
+  const sendMsg = (message) => {
+    // io.emit();
+    // setMessages((prev) => [
+    //   ...prev,
+    //   {
+    //     message: "hai you have been disQualified",
+    //     time: "1:5pm",
+    //     name: "jojo",
+    //   },
+    // ]);
+
+    socket.emit("chatMessage", message);
   };
+
+  socket.on("message", (message) => {
+    console.log(message);
+  });
 
   const leaveRoom = () => {
     localStorage.clear();
@@ -61,7 +51,7 @@ const Chat = () => {
   return (
     <div className="p-o flex h-screen w-full flex-col items-center bg-gray-700 capitalize text-white md:p-10 lg:p-20 2xl:text-xl">
       <div className="container flex h-screen w-full flex-col overflow-hidden border-2 border-gray-800 md:h-auto md:rounded-lg">
-        <div className="nav flex h-20 w-full items-center justify-between bg-gray-700 px-3 md:bg-gray-800">
+        <div className="nav flex h-20 w-full items-center justify-between bg-gray-600 px-3 md:bg-gray-800">
           <div className="flex items-center justify-center space-x-2">
             <i className="fa-solid fa-message"></i>
             <IoLogoSnapchat size="2em" />
@@ -88,17 +78,21 @@ const Chat = () => {
                 room -- 5
               </h1>
               <div className="rooms space-y-3 py-3 text-center">
-                {rooms.map((room, index) => {
+                {/* {rooms.map((room, index) => {
                   return (
                     <div className="room" key={index}>
                       <p>{room}</p>
                     </div>
                   );
-                })}
+                })} */}
+
+                <div className="room">
+                  <p>{localStorage.getItem("room")}</p>
+                </div>
               </div>
             </div>
           </div>
-          <div className="msgSection no-scrollbar h-full  w-full overflow-scroll overscroll-none  bg-gray-800 text-white  md:h-auto md:rounded-lg">
+          <div className="msgSection no-scrollbar h-full  w-full overflow-scroll overscroll-none  bg-gray-800 text-white  md:h-auto ">
             <div className="space-y-5 p-5 pb-36 text-left md:pb-5">
               {messages.map((message) => {
                 return (
